@@ -1,29 +1,14 @@
 # pokole-web
+To be used with [Pokole](https://github.com/penfoldium/pokole)'s static files hosting feature
 
-## Project setup
-```
-npm install
-```
+## 📝 Requirements
+- [Node.js](https://nodejs.org/en/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## ⚙️ Configuration
+- `git clone https://github.com/penfoldium/pokole-web`
+- `cd pokole-web`
+- `npm install`
+- Edit the [config.example.json](./src/config.example.json) file and rename it to `config.json`
+- `npm run build`
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Vue-CLI will build the webpage into the `/dist` folder, you being able to host these files with Pokole's static feature!

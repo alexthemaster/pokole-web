@@ -1,0 +1,63 @@
+body {
+    background: #332f2f
+}
+
+#app {
+    color: white;
+    background: #1f1c1c;
+    border: 3px solid #1f1c1c;
+    border-radius: 10px;
+    padding: 10px;
+    width: 500px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+a {
+    color: white;
+}
+  
+.btn {
+    background: #fcba03;
+}
+  
+.btn[disabled] {
+    color: black;
+    background: #d69d01;
+}
+  
+.input {
+    color: white;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.md-field label {
+    margin-left: 10px;
+}
+
+.md-focused label {
+    margin-left: 0px;
+}
+  
+.error {
+    color: rgb(233, 27, 27);
+}
+  
+.success {
+    color: rgb(27, 233, 37);
+}
+
+
+@media only screen and (max-width: 425px) {
+    #app {
+        width: 400px !important;
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    #app {
+        width: 350px !important;
+    }
+}

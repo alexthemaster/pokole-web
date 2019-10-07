@@ -1,7 +1,13 @@
 {
   "name": "pokole-web",
   "version": "0.1.0",
+  "author": "Penfoldium",
   "private": true,
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/penfoldium/pokole-web/issues"
+  },
+  "homepage": "https://github.com/penfoldium/pokole-web#readme",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -9,7 +15,10 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-cookies": "^1.5.13",
+    "vue-material": "^1.0.0-beta-11",
+    "vue-router": "^3.1.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.11.0",
@@ -19,6 +28,10 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
+  },
+  "vue": {
+    "publicPath": "./",
+    "productionSourceMap": false
   },
   "eslintConfig": {
     "root": true,
