@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p class="md-title">Your shortened links</p>    
-    <p v-if="!count">
+    <p class="md-title">Your shortened links</p>
+    <p v-if="!this.stats.length">
       I can see... a big sea of nothing!
       Try creating some shortlinks over
       <router-link to="/admin">here!</router-link>
@@ -15,7 +15,7 @@
         Short URL:
         <a :href="link.shortURL">{{link.shortURL}}</a>
       </p>
-      <p>Clicks: {{link.clicks}}</p>
+      <p>Statistics: {{link.stats}}</p>
       <hr />
     </div>
     <router-link to="/admin">Go back!</router-link>
@@ -29,8 +29,7 @@ export default {
   name: "links",
   data() {
     return {
-      links: [],
-      count: 0
+      stats: [],
     };
   },
   beforeMount() {
@@ -38,14 +37,13 @@ export default {
 
     fetch(api + "/me/links", {
       headers: {
-        Authorization: `Bearer ${this.$cookies.get("token")}`
-      }
+        Authorization: `Bearer ${this.$cookies.get("token")}`,
+      },
     })
-      .then(res => res.json())
-      .then(res => {
-        this.links = res.data;
-        this.count = res.count;
+      .then((res) => res.json())
+      .then((res) => {
+        this.stats = res.data;
       });
-  }
+  },
 };
 </script>
