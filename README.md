@@ -1,11 +1,11 @@
 # pokole-web
-To be used with [Pokole](https://github.com/penfoldium/pokole)'s static files hosting feature
+To be used with [Pokole](https://github.com/alexthemaster/pokole)'s static files hosting feature
 
 ## 📝 Requirements
 - [Node.js](https://nodejs.org/en/)
 
 ## ⚙️ Configuration
-- `git clone https://github.com/penfoldium/pokole-web`
+- `git clone https://github.com/alexthemaster/pokole-web`
 - `cd pokole-web`
 - `npm install`
 - Edit the [config.example.json](./src/config.example.json) file and rename it to `config.json`

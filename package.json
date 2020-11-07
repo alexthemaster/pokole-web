@@ -1,13 +1,13 @@
 {
   "name": "pokole-web",
   "version": "2.0.0",
-  "author": "Penfoldium",
+  "author": "Alex Kovacs",
   "private": true,
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/penfoldium/pokole-web/issues"
+    "url": "https://github.com/alexthemaster/pokole-web/issues"
   },
-  "homepage": "https://github.com/penfoldium/pokole-web#readme",
+  "homepage": "https://github.com/alexthemaster/pokole-web#readme",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
