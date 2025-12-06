@@ -4,20 +4,20 @@
   --color-primary-hover: #4f46e5; /* Indigo 600 */
   --color-secondary: #ec4899; /* Pink 500 */
   --color-accent: #8b5cf6; /* Violet 500 */
-  
+
   --color-background: #0f172a; /* Slate 900 */
   --color-surface: #1e293b; /* Slate 800 */
   --color-surface-hover: #334155; /* Slate 700 */
-  
+
   --color-text-main: #f8fafc; /* Slate 50 */
   --color-text-muted: #94a3b8; /* Slate 400 */
-  
+
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
 
-  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-family: "Inter", system-ui, -apple-system, sans-serif;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-full: 9999px;
@@ -26,7 +26,9 @@
   --transition-normal: 300ms ease;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -51,7 +53,12 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--color-text-main);
   font-weight: 700;
   line-height: 1.2;

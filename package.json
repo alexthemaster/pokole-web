@@ -13,7 +13,9 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --fix"
+    "lint": "eslint . --fix",
+    "format": "prettier --write \"**/*.{js,ts,vue,jsx,tsx,json,css,md,html}\"",
+    "format:check": "prettier --check \"**/*.{js,ts,vue,jsx,tsx,json,css,md,html}\""
   },
   "dependencies": {
     "vue": "^3.4.0",
@@ -28,8 +30,9 @@
     "eslint": "^9.39.1",
     "eslint-plugin-vue": "^9.23.0",
     "jiti": "^2.6.1",
+    "prettier": "^3.7.4",
     "typescript": "~5.4.0",
-    "vite": "^5.2.0",
+    "vite": "^7.2.6",
     "vue-tsc": "^2.0.0"
   }
 }

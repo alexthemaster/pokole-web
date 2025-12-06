@@ -1,0 +1,15 @@
+node_modules
+dist
+dist-ssr
+coverage
+public
+.git
+*.min.js
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+build
+*.png
+*.jpg
+*.jpeg
+*.gif

@@ -1,5 +1,5 @@
-const TOKEN_KEY = 'token';
-const EXPIRY_KEY = 'token_expiry';
+const TOKEN_KEY = "token";
+const EXPIRY_KEY = "token_expiry";
 
 export const setToken = (token: string, expiresIn: string | number): void => {
   if (!token) {
@@ -10,7 +10,7 @@ export const setToken = (token: string, expiresIn: string | number): void => {
 
   // Calculate absolute expiry time
   // expiresIn might be in seconds (common for JWT) or a string
-  const seconds = typeof expiresIn === 'string' ? parseInt(expiresIn, 10) : expiresIn;
+  const seconds = typeof expiresIn === "string" ? parseInt(expiresIn, 10) : expiresIn;
   if (!isNaN(seconds) && seconds > 0) {
     const expiryTime = new Date().getTime() + seconds * 1000;
     localStorage.setItem(EXPIRY_KEY, expiryTime.toString());

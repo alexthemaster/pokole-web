@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+  import { RouterView } from "vue-router";
 </script>
 
 <template>
@@ -9,9 +9,9 @@ import { RouterView } from 'vue-router'
 </template>
 
 <style scoped>
-#app-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+  #app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 </style>
