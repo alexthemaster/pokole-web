@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { onBeforeMount, ref } from "vue";
-  import { useRouter } from "vue-router";
-  import type { Link } from "../../types"; // Removed VueCookies interface
-  import { getToken, isAuthenticated, removeToken } from "../../utils/auth";
-  import { getApiUrl, getDisplayUrl } from "../../utils/config";
+import { useRouter } from "vue-router";
+import type { Link } from "../../types"; // Removed VueCookies interface
+import { getToken, isAuthenticated, removeToken } from "../../utils/auth";
+import { getApiUrl, getDisplayUrl } from "../../utils/config";
 
   defineOptions({
     name: "LinksPage",
@@ -11,6 +11,7 @@
 
   const router = useRouter();
   const links = ref<Link[]>([]);
+  const deleting = ref<string | null>(null);
 
   const logout = () => {
     removeToken();
@@ -54,6 +55,40 @@
         // handle error
       });
   });
+
+  const deleteLink = async (shortURL: string) => {
+    if (!confirm("Are you sure you want to delete this link?")) return;
+    const token = getToken();
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    try {
+      deleting.value = shortURL;
+      const res = await fetch(getApiUrl() + "/me/links/" + shortURL, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      });
+
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err || `Delete failed (${res.status})`);
+      }
+
+      // Remove from UI
+      links.value = links.value.filter((l) => l.shortURL !== shortURL);
+    } catch (e) {
+      // Basic error feedback
+      console.error(e);
+      alert("Failed to delete link. Please try again.");
+    } finally {
+      deleting.value = null;
+    }
+  };
 </script>
 
 <template>
@@ -93,6 +128,16 @@
               <span class="created-date" v-if="link.created_on"
                 >Created: {{ formatDate(link.created_on) }}</span
               >
+              <div style="margin-top:6px;">
+                <button
+                  class="btn-danger"
+                  :disabled="deleting === link.shortURL"
+                  @click="deleteLink(link.shortURL)"
+                >
+                  <span v-if="deleting === link.shortURL">Deleting...</span>
+                  <span v-else>Delete</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -253,5 +298,30 @@
   .created-date {
     font-size: 0.75rem;
     color: var(--color-text-muted);
+  }
+
+  /* Delete button styles */
+  .btn-danger {
+    background: transparent;
+    border: 1px solid rgba(255, 80, 80, 0.18);
+    color: #ff6b6b;
+    padding: 0.35rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease, transform 80ms ease;
+  }
+
+  .btn-danger:hover:not([disabled]) {
+    background: rgba(255, 80, 80, 0.12);
+    color: #ff4d4d;
+    transform: translateY(-1px);
+  }
+
+  .btn-danger[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
   }
 </style>

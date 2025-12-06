@@ -1,7 +1,7 @@
 export interface Link {
   shortURL: string;
   longURL: string;
-  stats: number;
+  stats: object[];
   created_on: Date;
 }
 

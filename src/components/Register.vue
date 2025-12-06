@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { ref, onBeforeMount } from "vue";
-  import { useRouter } from "vue-router";
-  import { getApiUrl } from "../utils/config";
-  import { isAuthenticated } from "../utils/auth";
+  import { onBeforeMount, ref } from "vue";
+import { useRouter } from "vue-router";
+import { isAuthenticated } from "../utils/auth";
+import { getApiUrl } from "../utils/config";
 
   defineOptions({
     name: "RegisterPage",
@@ -35,11 +35,14 @@
 
     fetch(getApiUrl() + "/register", {
       method: "POST",
-      headers: {
+            headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         username: user.value,
         email: email.value,
         password: password.value,
-      },
+      }),
     })
       .then((res) => res.json())
       .then((res) => {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  import { ref, onBeforeMount } from "vue";
-  import { useRouter } from "vue-router";
-  import { getApiUrl } from "../../utils/config";
-  import { getToken, isAuthenticated, removeToken } from "../../utils/auth";
+  import { onBeforeMount, ref } from "vue";
+import { useRouter } from "vue-router";
+import { getToken, isAuthenticated, removeToken } from "../../utils/auth";
+import { getApiUrl } from "../../utils/config";
 
   defineOptions({
     name: "AdminPage",
@@ -36,10 +36,11 @@
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        custom: custom.value || "",
-        URL: longURL.value,
         Authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        custom: custom.value || "",
+        url: longURL.value})
     })
       .then((res) => res.json())
       .then((res) => {

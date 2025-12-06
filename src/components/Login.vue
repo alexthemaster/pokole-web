@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { onBeforeMount, ref } from "vue";
-  import { useRouter } from "vue-router";
-  import { isAuthenticated, setToken } from "../utils/auth";
-  import { getApiUrl } from "../utils/config";
+import { useRouter } from "vue-router";
+import { isAuthenticated, setToken } from "../utils/auth";
+import { getApiUrl } from "../utils/config";
 
   defineOptions({
     name: "LoginPage",
@@ -43,9 +43,12 @@
     fetch(currentApi + "/login", {
       method: "POST",
       headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
         user: user.value,
         password: password.value,
-      },
+      }),
     })
       .then((res) => res.json())
       .then((res) => {
