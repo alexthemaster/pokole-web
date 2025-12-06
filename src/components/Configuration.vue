@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineOptions } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getApiUrl, setApiUrl, getFrontUrl, setFrontUrl } from '../utils/config'
 

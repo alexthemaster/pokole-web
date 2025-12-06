@@ -1,96 +1,242 @@
+<script setup lang="ts">
+import { ref, onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+import { getApiUrl } from '../utils/config'
+import { setToken, isAuthenticated } from '../utils/auth'
+
+defineOptions({
+  name: 'LoginPage'
+})
+
+const router = useRouter()
+
+const user = ref('')
+const password = ref('')
+const errors = ref<string[]>([])
+const success = ref<string[]>([])
+const disabled = ref(false)
+const disabledReason = ref<string | null>(null)
+
+const validateFields = () => {
+  errors.value = []
+  if (!user.value) errors.value.push("Please provide a username or email.")
+  if (!password.value) errors.value.push("Please provide a password.")
+  return errors.value.length === 0
+}
+
+const checkConnection = () => {
+    fetch(`${getApiUrl()}/register`)
+    .then(() => {})
+    .catch(() => {
+        disabled.value = true
+        disabledReason.value = "API not configured or unreachable."
+    })
+}
+
+
+const login = () => {
+  if (!validateFields()) return
+
+  const currentApi = getApiUrl()
+  errors.value = []
+  success.value = []
+
+  fetch(currentApi + "/login", {
+    method: "POST",
+    headers: {
+      user: user.value,
+      password: password.value
+    }
+  })
+  .then(res => res.json())
+  .then(res => {
+    if (res.error) {
+      errors.value = [res.error]
+      return
+    }
+    success.value = ['Successfully logged in!']
+    setToken(res.token, res.expiresIn)
+    setTimeout(() => {
+      router.replace('/admin')
+    }, 500)
+  })
+  .catch(() => {
+    errors.value = ["Failed to connect to server. Check API URL configuration."]
+  })
+}
+
+onBeforeMount(() => {
+  if (isAuthenticated()) {
+    router.replace('/admin')
+    return
+  }
+  checkConnection()
+})
+</script>
+
 <template>
-  <div>
-    <p class="md-title">Login</p>    
-    <md-field>
-      <md-icon>person</md-icon>
-      <label for="user">Email or Username</label>
-      <md-input
-        v-on:keyup.enter="login"
-        class="input"
-        name="user"
-        type="user"
-        v-model="user"
-        required
-      ></md-input>
-    </md-field>
+  <div class="page-container">
+    <div class="card auth-card">
+      <h1 class="title">Welcome Back</h1>
+      <p class="subtitle">Login to access your dashboard</p>
 
-    <md-field>
-      <md-icon>lock</md-icon>
-      <label for="password">Password</label>
-      <md-input
-        v-on:keyup.enter="login"
-        class="input"
-        name="password"
-        type="password"
-        v-model="password"
-        required
-      ></md-input>
-    </md-field>
+      <div class="form-group">
+        <label>Email or Username</label>
+        <input 
+          v-model="user" 
+          @keyup.enter="login"
+          type="text" 
+          class="input"
+          placeholder="Enter your credential"
+          :disabled="disabled"
+          required
+        />
+      </div>
 
-    <p class="md-subheading error" v-for="error in errors" v-bind:key="error">{{error}}</p>
-    <p class="md-subheading success" v-for="element in success" v-bind:key="element">{{element}}</p>
+      <div class="form-group">
+        <label>Password</label>
+        <input 
+          v-model="password" 
+          @keyup.enter="login"
+          type="password" 
+          class="input" 
+          placeholder="Enter your password"
+          :disabled="disabled"
+          required
+        />
+      </div>
 
-    <md-button class="btn" @click="login">Login</md-button>
-    <router-link to="/register"><md-button class="btn" :disabled.sync="disabled">Register instead</md-button></router-link>
+      <div v-if="errors.length" class="message error">
+        <p v-for="error in errors" :key="error">{{ error }}</p>
+      </div>
+
+      <div v-if="success.length" class="message success">
+        <p v-for="msg in success" :key="msg">{{ msg }}</p>
+      </div>
+
+      <div v-if="disabled" class="message error">
+        {{ disabledReason }}
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" @click="login" :disabled="disabled">Login</button>
+        <router-link to="/register" class="register-link">
+          <button class="btn secondary" :disabled="disabled">Register instead</button>
+        </router-link>
+      </div>
+
+      <div class="config-section">
+          <router-link to="/settings" class="settings-link">
+            <button class="btn-text">Settings</button>
+          </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
-<script>
-import { api } from "../config.json";
+<style scoped>
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
 
-export default {
-  name: "login",
-  data() {
-    return {
-      user: "",
-      password: "",
-      errors: [],
-      success: [],
-      disabled: false
-    };
-  },
-  methods: {
-    login() {
-      if (!this.validateFields()) return;
-      fetch(api + "/login", {
-        method: "POST",
-        headers: {
-          user: this.user,
-          password: this.password
-        }
-      })
-        .then(res => res.json())
-        .then(res => {
-          if (res.error) return this.handleError(res.error);
-          this.handleSuccess('Successfully logged in!');
-          this.$cookies.set('token', res.token, res.expiresIn);
-          return setTimeout(() => {
-            return this.$router.replace('/admin');            
-          }, 2000);
-        });
-    },
-    validateFields() {
-      this.errors = [];
-      if (!this.user) this.errors.push("Please provide an username or email.");
-      if (!this.password) this.errors.push("Please provide a password.");
-      if (this.errors.length) return false;
-      return true;
-    },
-    handleError(error) {
-      this.errors = [];
-      return this.errors.push(error);
-    },
-    handleSuccess(success) {
-      this.success = [];
-      return this.success.push(success);
-    }
-  },
-  beforeMount() {
-    if (this.$cookies.isKey('token')) return this.$router.replace('/admin');
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
 
-    fetch(`${api}/register`)
-      .then(res => res.json())
-      .then(res => (this.disabled = !res));
-  }
-};
-</script>
+.title {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+
+.subtitle {
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn.primary {
+  width: 100%;
+}
+
+.btn.secondary {
+  width: 100%;
+  background: var(--color-surface-hover);
+  color: var(--color-text-main);
+}
+
+.btn.secondary:hover {
+  background: var(--color-surface);
+  border: 1px solid var(--color-primary);
+}
+
+.message {
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.message.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.message.success {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.register-link {
+  width: 100%;
+}
+
+.config-section {
+  border-top: 1px solid var(--color-surface-hover);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  text-decoration: underline;
+}
+
+.settings-link {
+    text-decoration: none;
+}
+</style>

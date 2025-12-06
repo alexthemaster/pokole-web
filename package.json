@@ -1,59 +1,35 @@
 {
   "name": "pokole-web",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "Alex Kovacs",
   "private": true,
+  "type": "module",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/alexthemaster/pokole-web/issues"
   },
   "homepage": "https://github.com/alexthemaster/pokole-web#readme",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^2.6.12",
-    "vue-cookies": "^1.7.4",
-    "vue-material": "^1.0.0",
-    "vue-router": "^3.4.9"
+    "vue": "^3.4.0",
+    "vue-router": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.12.1",
-    "eslint-plugin-vue": "^7.1.0",
-    "vue-template-compiler": "^2.6.12"
-  },
-  "vue": {
-    "publicPath": "./",
-    "productionSourceMap": false
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+    "@types/node": "^24.10.1",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/tsconfig": "^0.8.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-vue": "^9.23.0",
+    "jiti": "^2.6.1",
+    "typescript": "~5.4.0",
+    "vite": "^5.2.0",
+    "vue-tsc": "^2.0.0"
+  }
 }
