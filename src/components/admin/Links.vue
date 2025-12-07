@@ -3,7 +3,7 @@
 import { useRouter } from "vue-router";
 import type { Link } from "../../types"; // Removed VueCookies interface
 import { getToken, isAuthenticated, removeToken } from "../../utils/auth";
-import { getApiUrl, getDisplayUrl } from "../../utils/config";
+import { getDisplayUrl, getPokoleUrl } from "../../utils/config";
 
   defineOptions({
     name: "LinksPage",
@@ -42,7 +42,7 @@ import { getApiUrl, getDisplayUrl } from "../../utils/config";
       return;
     }
 
-    fetch(getApiUrl() + "/me/links", {
+    fetch(getPokoleUrl() + "/api/me/links", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -66,7 +66,7 @@ import { getApiUrl, getDisplayUrl } from "../../utils/config";
 
     try {
       deleting.value = shortURL;
-      const res = await fetch(getApiUrl() + "/me/links/" + shortURL, {
+      const res = await fetch(getPokoleUrl() + "/api/me/links/" + shortURL, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

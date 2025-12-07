@@ -2,7 +2,7 @@
   import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
 import { getToken, isAuthenticated, removeToken } from "../../utils/auth";
-import { getApiUrl } from "../../utils/config";
+import { getPokoleUrl } from "../../utils/config";
 
   defineOptions({
     name: "AdminPage",
@@ -32,7 +32,7 @@ import { getApiUrl } from "../../utils/config";
       return;
     }
 
-    fetch(getApiUrl() + "/shorten", {
+    fetch(getPokoleUrl() + "/api/shorten", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

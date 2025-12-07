@@ -2,7 +2,7 @@
   import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
 import { isAuthenticated, setToken } from "../utils/auth";
-import { getApiUrl } from "../utils/config";
+import { getPokoleUrl } from "../utils/config";
 
   defineOptions({
     name: "LoginPage",
@@ -25,7 +25,7 @@ import { getApiUrl } from "../utils/config";
   };
 
   const checkConnection = () => {
-    fetch(`${getApiUrl()}/register`)
+    fetch(`${getPokoleUrl()}/api/register`)
       .then(() => {})
       .catch(() => {
         disabled.value = true;
@@ -36,11 +36,11 @@ import { getApiUrl } from "../utils/config";
   const login = () => {
     if (!validateFields()) return;
 
-    const currentApi = getApiUrl();
+    const currentApi = getPokoleUrl();
     errors.value = [];
     success.value = [];
 
-    fetch(currentApi + "/login", {
+    fetch(currentApi + "/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

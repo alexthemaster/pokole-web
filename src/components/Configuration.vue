@@ -1,15 +1,14 @@
 <script setup lang="ts">
   import { ref } from "vue";
-  import { useRouter } from "vue-router";
-  import { getApiUrl, setApiUrl, getFrontUrl, setFrontUrl } from "../utils/config";
+import { useRouter } from "vue-router";
+import { getPokoleUrl, setPokoleUrl } from "../utils/config";
 
   defineOptions({
     name: "ConfigurationPage",
   });
 
   const router = useRouter();
-  const apiUrl = ref(getApiUrl());
-  const frontUrl = ref(getFrontUrl());
+  const PokoleUrl = ref(getPokoleUrl());
   const message = ref("");
   const isError = ref(false);
 
@@ -17,11 +16,10 @@
     message.value = "";
     isError.value = false;
 
-    setApiUrl(apiUrl.value);
-    setFrontUrl(frontUrl.value);
+    setPokoleUrl(PokoleUrl.value);
 
-    const currentApi = getApiUrl();
-    fetch(`${currentApi}/register`) // Using /register as a health check since it's public
+    const currentUrl = getPokoleUrl();
+    fetch(`${currentUrl}/api/register`) // Using /register as a health check since it's public
       .then((res) => res.json())
       .then(() => {
         message.value = "Configuration saved and connection verified!";
@@ -49,16 +47,9 @@
       <div class="form-group">
         <label>API URL</label>
         <div class="input-group">
-          <input v-model="apiUrl" type="text" class="input" placeholder="http://localhost:8080" />
+          <input v-model="PokoleUrl" type="text" class="input" placeholder="http://localhost:8080" />
         </div>
         <small class="hint">The address of your Pokole API.</small>
-      </div>
-
-      <div class="form-group">
-        <label>Frontend URL (Optional)</label>
-        <div class="input-group">
-          <input v-model="frontUrl" type="text" class="input" placeholder="https://mysite.com" />
-        </div>
       </div>
 
       <div v-if="message" :class="['message', isError ? 'error' : 'success']">

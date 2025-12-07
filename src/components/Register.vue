@@ -2,7 +2,7 @@
   import { onBeforeMount, ref } from "vue";
 import { useRouter } from "vue-router";
 import { isAuthenticated } from "../utils/auth";
-import { getApiUrl } from "../utils/config";
+import { getPokoleUrl } from "../utils/config";
 
   defineOptions({
     name: "RegisterPage",
@@ -33,7 +33,7 @@ import { getApiUrl } from "../utils/config";
   const register = () => {
     if (!validateFields()) return;
 
-    fetch(getApiUrl() + "/register", {
+    fetch(getPokoleUrl() + "/api/register", {
       method: "POST",
             headers: {
         "Content-Type": "application/json",
@@ -63,7 +63,7 @@ import { getApiUrl } from "../utils/config";
       return;
     }
 
-    fetch(`${getApiUrl()}/register`)
+    fetch(`${getPokoleUrl()}/api/register`)
       .then((res) => res.json())
       .then((res) => {
         disabled.value = !res;
