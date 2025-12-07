@@ -42,7 +42,7 @@ import { getPokoleUrl, setPokoleUrl } from "../utils/config";
   <div class="page-container">
     <div class="card config-card">
       <h1 class="title">Settings</h1>
-      <p class="subtitle">Configure your server connection</p>
+      <p class="subtitle">Set a custom Pokole URL (advanced users)</p>
 
       <div class="form-group">
         <label>API URL</label>
