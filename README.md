@@ -9,9 +9,9 @@ This codebase started as a fully human-written Vue 2 project and was later migra
 
 - [Node.js](https://nodejs.org/en/)
 
-## ⚙️ Configuration
+## ⚙️ Local development
 
 - `git clone https://github.com/alexthemaster/pokole-web`
 - `cd pokole-web`
 - `npm install`
-- `npm run build`
+- `npm run dev
